@@ -3,29 +3,42 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.3.5</version>
-		<relativePath/> <!-- lookup parent from repository -->
-	</parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.3.5</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+    
 	<groupId>trex.com</groupId>
-	<artifactId>web</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>Web</name>
-	<description>Demo project for Spring Boot</description>
-	<url/>
-	<licenses>
-		<license/>
-	</licenses>
-	<developers>
-		<developer/>
-	</developers>
-	<scm>
-		<connection/>
-		<developerConnection/>
-		<tag/>
-		<url/>
-	</scm>
+    <artifactId>web</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>T-Rex Backend</name>
+    <description>T-Rex Website Backend API</description>
+    
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>https://opensource.org/licenses/MIT</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+    
+    <developers>
+        <developer>
+            <id>trex-team</id>
+            <name>T-Rex Development Team</name>
+            <email>team@trex.com</email>
+            <organization>T-Rex</organization>
+            <organizationUrl>https://trex.com</organizationUrl>
+        </developer>
+    </developers>
+    
+    <scm>
+        <connection>scm:git:git://github.com/trex/t-rex-backend.git</connection>
+        <developerConnection>scm:git:ssh://github.com:trex/t-rex-backend.git</developerConnection>
+        <url>https://github.com/trex/t-rex-backend</url>
+        <tag>HEAD</tag>
+    </scm>
 	<properties>
 		<java.version>21</java.version>
 	</properties>
@@ -44,10 +57,9 @@
 			<artifactId>jakarta.validation-api</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-redis</artifactId>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-cache</artifactId>
 		</dependency>
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-mail</artifactId>
