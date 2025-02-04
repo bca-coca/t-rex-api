@@ -2,7 +2,6 @@ package trex.com.web.achievement.service;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
@@ -29,8 +28,8 @@ public class AchievementService {
         try {
             log.info("Fetching all achievements sorted by date");
             return repository.findAll().stream()
-                    .sorted(Comparator.comparing(AchievementModel::getDate))
-                    .collect(Collectors.toList());
+            .sorted(Comparator.comparing(AchievementModel::getDate).reversed())
+            .toList();
         } catch (Exception e) {
             log.error("Error fetching achievements: {}", e.getMessage());
             throw new RuntimeException("Unable to fetch achievements", e);
