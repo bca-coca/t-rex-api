@@ -7,6 +7,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -42,7 +43,7 @@ public class ItemController {
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<ItemModel> createItem(
-        @RequestPart("item") @Valid ItemModel item,
+        @ModelAttribute @Valid ItemModel item,
         @RequestPart("images") List<MultipartFile> images        
     ) {
         log.info("Creating new item with images");
@@ -52,7 +53,7 @@ public class ItemController {
     @PutMapping(value = "/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<ItemModel> updateItem(
         @PathVariable Long id,
-        @RequestPart("item") @Valid ItemModel item,
+        @ModelAttribute @Valid ItemModel item,
         @RequestPart(value = "images", required = false) List<MultipartFile> images
     ) {
         log.info("Updating item with ID: {}", id);
