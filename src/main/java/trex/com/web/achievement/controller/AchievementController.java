@@ -31,7 +31,6 @@ public class AchievementController {
     @GetMapping("/{id}")
     @Cacheable(value = "achievement", key = "#id")
     public ResponseEntity<AchievementModel> getAchievement(@PathVariable Long id) {
-        log.info("Fetching achievement with ID: {}", id);
         AchievementModel achievement = service.getAchievement(id);
         return ResponseEntity.ok(achievement);
     }
@@ -39,7 +38,6 @@ public class AchievementController {
     @GetMapping
     @Cacheable(value = "achievements")
     public ResponseEntity<List<AchievementModel>> getAllAchievements() {
-        log.info("Fetching all achievements");
         List<AchievementModel> achievements = service.getAllAchievementsSortedByDate();
         return ResponseEntity.ok(achievements);
     }
@@ -49,7 +47,6 @@ public class AchievementController {
     public ResponseEntity<AchievementModel> createAchievement(
         @Valid @RequestBody AchievementModel model
     ) {
-        log.info("Creating achievement: {}", model);
         AchievementModel created = service.addAchievement(model);
         return new ResponseEntity<>(created, HttpStatus.CREATED);
     }
@@ -60,7 +57,6 @@ public class AchievementController {
         @PathVariable Long id,
         @Valid @RequestBody AchievementModel model
     ) {
-        log.info("Updating achievement with ID: {}", id);
         AchievementModel updated = service.updateAchievement(id, model);
         return ResponseEntity.ok(updated);
     }
@@ -68,7 +64,6 @@ public class AchievementController {
     @DeleteMapping("/{id}")
     @CacheEvict(value = "achievement", key = "#id")
     public ResponseEntity<Void> deleteAchievement(@PathVariable Long id) {
-        log.info("Deleting achievement with ID: {}", id);
         service.deleteAchievement(id);
         return ResponseEntity.noContent().build();
     }
