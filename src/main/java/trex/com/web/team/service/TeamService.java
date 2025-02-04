@@ -44,6 +44,9 @@ public class TeamService {
             log.info("Fetching team member with ID: {}", id);
             return repository.findById(id)
                     .orElseThrow(() -> new ResourceNotFoundException("Team member not found with id: " + id));
+        } catch (ResourceNotFoundException e) {
+            log.error("Team member not found: {}", e.getMessage());
+            throw e;
         } catch (Exception e) {
             log.error("Error fetching team member: {}", e.getMessage());
             throw new RuntimeException("Failed to fetch team member", e);
@@ -84,6 +87,9 @@ public class TeamService {
             existingMember.setInstagram(updatedMember.getInstagram());
             
             return repository.save(existingMember);
+        } catch (ResourceNotFoundException e) {
+            log.error("Team member not found: {}", e.getMessage());
+            throw e;
         } catch (Exception e) {
             log.error("Error updating team member: {}", e.getMessage());
             throw new RuntimeException("Failed to update team member", e);

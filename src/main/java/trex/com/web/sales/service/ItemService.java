@@ -42,6 +42,9 @@ public class ItemService {
             log.info("Fetching item with ID: {}", id);
             return repository.findById(id)
                     .orElseThrow(() -> new ResourceNotFoundException("Item not found with id: " + id));
+        } catch (ResourceNotFoundException e) {
+            log.error("Item not found: {}", e.getMessage());
+            throw e;
         } catch (Exception e) {
             log.error("Error fetching item: {}", e.getMessage());
             throw new RuntimeException("Failed to fetch item", e);
@@ -81,6 +84,9 @@ public class ItemService {
             existingItem.setPrice(updatedItem.getPrice());
 
             return repository.save(existingItem);
+        } catch (ResourceNotFoundException e) {
+            log.error("Item not found: {}", e.getMessage());
+            throw e;
         } catch (Exception e) {
             log.error("Error updating item: {}", e.getMessage());
             throw new RuntimeException("Failed to update item", e);
@@ -97,6 +103,9 @@ public class ItemService {
             
             deleteExistingImages(item.getImg());
             repository.deleteById(id);
+        } catch (ResourceNotFoundException e) {
+            log.error("Item not found: {}", e.getMessage());
+            throw e;
         } catch (Exception e) {
             log.error("Error deleting item: {}", e.getMessage());
             throw new RuntimeException("Failed to delete item", e);

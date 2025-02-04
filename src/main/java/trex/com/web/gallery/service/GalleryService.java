@@ -39,6 +39,9 @@ public class GalleryService {
             log.info("Fetching gallery with ID: {}", id);
             return repository.findById(id)
                     .orElseThrow(() -> new ResourceNotFoundException("Gallery not found with id: " + id));
+        } catch (ResourceNotFoundException e) {
+            log.error("Gallery not found: {}", e.getMessage());
+            throw e;
         } catch (Exception e) {
             log.error("Error fetching gallery: {}", e.getMessage());
             throw new RuntimeException("Failed to fetch gallery", e);
@@ -73,6 +76,9 @@ public class GalleryService {
                 cloudinaryService.deleteImage(publicId);
             }
             repository.deleteById(id);
+        } catch (ResourceNotFoundException e) {
+            log.error("Gallery not found: {}", e.getMessage());
+            throw e;
         } catch (Exception e) {
             log.error("Error deleting gallery: {}", e.getMessage());
             throw new RuntimeException("Failed to delete gallery", e);

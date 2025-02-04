@@ -66,6 +66,9 @@ public class AchievementService {
             AchievementModel updatedAchievement = repository.save(existingAchievement);
             log.info("Updated achievement: {}", updatedAchievement);
             return updatedAchievement;
+        } catch (ResourceNotFoundException e) {
+            log.error("Achievement not found: {}", e.getMessage());
+            throw e;
         } catch (Exception e) {
             log.error("Error updating achievement: {}", e.getMessage());
             throw new RuntimeException("Unable to update achievement", e);
@@ -82,6 +85,9 @@ public class AchievementService {
             }
             repository.deleteById(id);
             log.info("Deleted achievement with ID: {}", id);
+        } catch (ResourceNotFoundException e) {
+            log.error("Achievement not found: {}", e.getMessage());
+            throw e;
         } catch (EmptyResultDataAccessException e) {
             log.error("Error deleting achievement: {}", e.getMessage());
             throw new RuntimeException("Unable to delete achievement", e);
@@ -94,6 +100,9 @@ public class AchievementService {
             log.info("Fetching achievement with ID: {}", id);
             return repository.findById(id)
                     .orElseThrow(() -> new ResourceNotFoundException("Achievement not found with id: " + id));
+        } catch (ResourceNotFoundException e) {
+            log.error("Achievement not found: {}", e.getMessage());
+            throw e;
         } catch (Exception e) {
             log.error("Error fetching achievement: {}", e.getMessage());
             throw new RuntimeException("Unable to fetch achievement", e);
