@@ -56,7 +56,7 @@ public class AchievementService {
         try {
             log.info("Updating achievement with ID: {}", id);
             AchievementModel existingAchievement = repository.findById(id)
-                    .orElseThrow(() -> new ResourceNotFoundException("Achievement not found with id: " + id));
+                    .orElseThrow(() -> new ResourceNotFoundException("Achievement", "id", id));
             
             existingAchievement.setDate(model.getDate());
             existingAchievement.setCollege(model.getCollege());
@@ -81,7 +81,7 @@ public class AchievementService {
         try {
             log.info("Deleting achievement with ID: {}", id);
             if (!repository.existsById(id)) {
-                throw new ResourceNotFoundException("Achievement not found with id: " + id);
+                throw new ResourceNotFoundException("Achievement", "id", id);
             }
             repository.deleteById(id);
             log.info("Deleted achievement with ID: {}", id);
@@ -99,7 +99,7 @@ public class AchievementService {
         try {
             log.info("Fetching achievement with ID: {}", id);
             return repository.findById(id)
-                    .orElseThrow(() -> new ResourceNotFoundException("Achievement not found with id: " + id));
+                    .orElseThrow(() -> new ResourceNotFoundException("Achievement", "id", id));
         } catch (ResourceNotFoundException e) {
             log.error("Achievement not found: {}", e.getMessage());
             throw e;
