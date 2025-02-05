@@ -43,7 +43,7 @@ public class TeamService {
         try {
             log.info("Fetching team member with ID: {}", id);
             return repository.findById(id)
-                    .orElseThrow(() -> new ResourceNotFoundException("Team member not found with id: " + id));
+                    .orElseThrow(() -> new ResourceNotFoundException("Team", "id", id));
         } catch (ResourceNotFoundException e) {
             log.error("Team member not found: {}", e.getMessage());
             throw e;
@@ -73,7 +73,7 @@ public class TeamService {
         try {
             log.info("Updating team member with ID: {}", id);
             TeamModel existingMember = repository.findById(id)
-                    .orElseThrow(() -> new ResourceNotFoundException("Team member not found with id: " + id));
+                    .orElseThrow(() -> new ResourceNotFoundException("Team", "id", id));
 
             if (image != null && !image.isEmpty()) {
                 String imageUrl = cloudinaryService.uploadImage(image);
@@ -101,7 +101,8 @@ public class TeamService {
     public void deleteTeamMember(Long id) {
         try {
             log.info("Deleting team member with ID: {}", id);
-            TeamModel member = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Team member not found with id: " + id));
+            TeamModel member = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Team", "id",
+                id));
 
             String imageUrl = member.getImg();
             if(imageUrl != null && !imageUrl.isEmpty()) {
