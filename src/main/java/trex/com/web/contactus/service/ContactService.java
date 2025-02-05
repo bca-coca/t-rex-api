@@ -31,7 +31,7 @@ public class ContactService {
         try {
             log.info("Fetching contact with ID: {}", id);
             return repository.findById(id)
-                    .orElseThrow(() -> new ResourceNotFoundException("Contact not found with id: " + id));
+                    .orElseThrow(() -> new ResourceNotFoundException("Contact", "id", id));
         } catch (ResourceNotFoundException e) {
             log.error("Contact not found: {}", e.getMessage());
             throw e;
@@ -46,7 +46,7 @@ public class ContactService {
         try {
             log.info("Deleting contact with ID: {}", id);
             if (!repository.existsById(id)) {
-                throw new ResourceNotFoundException("Contact not found with id: " + id);
+                throw new ResourceNotFoundException("Contact", "id", id);
             }
             repository.deleteById(id);
             log.info("Successfully deleted contact with ID: {}", id);
