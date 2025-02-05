@@ -38,7 +38,7 @@ public class GalleryService {
         try {
             log.info("Fetching gallery with ID: {}", id);
             return repository.findById(id)
-                    .orElseThrow(() -> new ResourceNotFoundException("Gallery not found with id: " + id));
+                    .orElseThrow(() -> new ResourceNotFoundException("Gallery", "id", id));
         } catch (ResourceNotFoundException e) {
             log.error("Gallery not found: {}", e.getMessage());
             throw e;
@@ -68,7 +68,7 @@ public class GalleryService {
         try {
             log.info("Deleting gallery with ID: {}", id);
             GalleryModel gallery = repository.findById(id)
-                    .orElseThrow(() -> new ResourceNotFoundException("Gallery not found with id: " + id));
+                    .orElseThrow(() -> new ResourceNotFoundException("Achievement", "id", id));
 
             String imageUrl = gallery.getImg();
             if (imageUrl != null && !imageUrl.isEmpty()) {
