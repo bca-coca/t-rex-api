@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import trex.com.web.config.CloudinaryService;
+import trex.com.web.exception.BadRequestException;
 import trex.com.web.exception.ResourceNotFoundException;
 import trex.com.web.sales.model.ItemModel;
 import trex.com.web.sales.repository.ItemRepository;
@@ -40,13 +41,19 @@ public class ItemService {
     public ItemModel getItem(Long id) {
         try {
             log.info("Fetching item with ID: {}", id);
+            if ( id == null || id <= 0 ) {
+                throw new BadRequestException("Invalid item ID");
+            }
             return repository.findById(id)
-                    .orElseThrow(() -> new ResourceNotFoundException("Item not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Item", "id", id));
+        } catch ( BadRequestException e ) {
+            log.error("Invalid item ID: {}", e.getMessage(), e);
+            throw e;
         } catch (ResourceNotFoundException e) {
-            log.error("Item not found: {}", e.getMessage());
+            log.error("Item not found: {}", e.getMessage(), e);
             throw e;
         } catch (Exception e) {
-            log.error("Error fetching item: {}", e.getMessage());
+            log.error("Error fetching item: {}", e.getMessage(), e);
             throw new RuntimeException("Failed to fetch item", e);
         }
     }
@@ -70,7 +77,7 @@ public class ItemService {
         try {
             log.info("Updating item with ID: {}", id);
             ItemModel existingItem = repository.findById(id)
-                    .orElseThrow(() -> new ResourceNotFoundException("Item not found with id: " + id));
+                    .orElseThrow(() -> new ResourceNotFoundException("Item", "id", id));
 
             if (newImages != null && !newImages.isEmpty()) {
                 deleteExistingImages(existingItem.getImg());
@@ -85,7 +92,7 @@ public class ItemService {
 
             return repository.save(existingItem);
         } catch (ResourceNotFoundException e) {
-            log.error("Item not found: {}", e.getMessage());
+            log.error("Item not found: {}", e.getMessage(), e);
             throw e;
         } catch (Exception e) {
             log.error("Error updating item: {}", e.getMessage());
@@ -99,7 +106,7 @@ public class ItemService {
         try {
             log.info("Deleting item with ID: {}", id);
             ItemModel item = repository.findById(id)
-                    .orElseThrow(() -> new ResourceNotFoundException("Item not found with id: " + id));
+                    .orElseThrow(() -> new ResourceNotFoundException("Item", "id", id));
             
             deleteExistingImages(item.getImg());
             repository.deleteById(id);
