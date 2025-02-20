@@ -76,7 +76,7 @@ public class AchievementService {
     }
 
     @Transactional
-    @CacheEvict(value = "achievements", key = "#id")
+    @CacheEvict(value = "achievements", allEntries = true)
     public void deleteAchievement(Long id) {
         try {
             log.info("Deleting achievement with ID: {}", id);
