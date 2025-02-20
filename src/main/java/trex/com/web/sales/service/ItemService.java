@@ -101,7 +101,7 @@ public class ItemService {
     }
 
     @Transactional
-    @CacheEvict(value = "items", key = "#id")
+    @CacheEvict(value = "items", allEntries = true)
     public void deleteItem(Long id) {
         try {
             log.info("Deleting item with ID: {}", id);
