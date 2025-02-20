@@ -34,6 +34,7 @@ public class GalleryService {
         }
     }
 
+    @Cacheable(value = "galleries", key = "#id")
     public GalleryModel getGallery(Long id) {
         try {
             log.info("Fetching gallery with ID: {}", id);
@@ -49,6 +50,7 @@ public class GalleryService {
     }
 
     @Transactional
+    @CacheEvict(value = "galleries", allEntries = true)
     public GalleryModel addGallery(MultipartFile image) {
         try {
             log.info("Adding new gallery image");
