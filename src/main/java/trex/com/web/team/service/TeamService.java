@@ -97,7 +97,7 @@ public class TeamService {
     }
 
     @Transactional
-    @CacheEvict(value = "TeamCache", key = "#id")
+    @CacheEvict(value = "TeamCache",allEntries = true)
     public void deleteTeamMember(Long id) {
         try {
             log.info("Deleting team member with ID: {}", id);
