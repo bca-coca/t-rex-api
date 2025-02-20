@@ -59,6 +59,7 @@ public class ItemService {
     }
 
     @Transactional
+    @CacheEvict(value = "items", allEntries = true)
     public ItemModel addItem(ItemModel item, List<MultipartFile> images) {
         try {
             log.info("Adding new item with images");
