@@ -38,7 +38,7 @@ public class AchievementService {
 
     @Transactional
     @CacheEvict(value = "achievements", allEntries = true)
-    public AchievementModel addAchievement(AchievementModel model) {
+    public AchievementModel addAchievement( AchievementModel model) {
         try {
             log.info("Attempting to add achievement: {}", model);
             AchievementModel savedAchievement = repository.save(model);
