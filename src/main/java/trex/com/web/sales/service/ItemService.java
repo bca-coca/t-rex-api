@@ -73,7 +73,7 @@ public class ItemService {
     }
 
     @Transactional
-    @CachePut(value = "items", key = "#id")
+    @CacheEvict(value = "items", allEntries = true)
     public ItemModel updateItem(Long id, ItemModel updatedItem, List<MultipartFile> newImages) {
         try {
             log.info("Updating item with ID: {}", id);
