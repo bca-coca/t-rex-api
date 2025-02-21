@@ -51,7 +51,7 @@ public class AchievementService {
     }
 
     @Transactional
-    @CachePut(value = "achievements", key = "#id")
+    @CacheEvict(value = "achievements", allEntries = true)
     public AchievementModel updateAchievement(Long id, AchievementModel model) {
         try {
             log.info("Updating achievement with ID: {}", id);
