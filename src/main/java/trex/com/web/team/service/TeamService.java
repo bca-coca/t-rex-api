@@ -68,7 +68,7 @@ public class TeamService {
     }
 
     @Transactional
-    @CachePut(value = "TeamCache", key = "#id")
+    @CacheEvict(value = "TeamCache", allEntries = true)
     public TeamModel updateTeamMember(Long id, TeamModel updatedMember, MultipartFile image) {
         try {
             log.info("Updating team member with ID: {}", id);
